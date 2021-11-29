@@ -14,7 +14,7 @@ export async function mongodb(arg) {
     // await listDatabases(client);
     await createListing(client, {
       name: arg.name,
-      summary: arg.summery,
+      summary: arg.summary,
       bedrooms: arg.bedrooms,
       bathrooms: arg.bathrooms,
     });

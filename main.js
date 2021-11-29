@@ -18,7 +18,7 @@ const port = 3000,
         .on("data", async function (chunk) {
           console.log(`BODY: ${chunk}`);
 
-          await mongodb();
+          await mongodb(JSON.parse(chunk));
           postData += chunk;
         })
         .on("end", function () {
