@@ -4,7 +4,7 @@ import httpStatus from "http-status-codes";
 import { mongodb } from "./mongodb.js";
 
 dotenv.config();
-const port = 3000,
+const port = 3030,
   app = http.createServer(async (req, res) => {
     // httpStatus.OK:200
     res.writeHead(httpStatus.OK, {
