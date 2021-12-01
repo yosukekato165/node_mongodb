@@ -9,6 +9,7 @@ const port = 3030,
     // httpStatus.OK:200
     res.writeHead(httpStatus.OK, {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
     });
 
     if (req.method === "POST") {
