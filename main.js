@@ -13,9 +13,9 @@ const port = 3030,
       /** add other headers as per requirement */
     };
     // httpStatus.OK:200
+    res.writeHead(httpStatus.OK, headers);
 
     if (req.method === "POST") {
-      res.writeHead(httpStatus.OK, headers);
       var postData = "";
 
       req
