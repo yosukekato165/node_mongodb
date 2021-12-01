@@ -6,13 +6,16 @@ import { mongodb } from "./mongodb.js";
 dotenv.config();
 const port = 3030,
   app = http.createServer(async (req, res) => {
-    // httpStatus.OK:200
-    res.writeHead(httpStatus.OK, {
-      "Content-Type": "application/json",
+    const headers = {
       "Access-Control-Allow-Origin": "*",
-    });
+      "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+      "Access-Control-Max-Age": 2592000, // 30 days
+      /** add other headers as per requirement */
+    };
+    // httpStatus.OK:200
 
     if (req.method === "POST") {
+      res.writeHead(httpStatus.OK, headers);
       var postData = "";
 
       req
