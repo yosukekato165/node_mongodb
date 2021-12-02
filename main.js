@@ -13,9 +13,9 @@ const port = 3030,
       /** add other headers as per requirement */
     };
     // httpStatus.OK:200
-    res.writeHead(httpStatus.OK, headers);
 
     if (req.method === "POST") {
+      res.writeHead(httpStatus.OK, headers);
       var postData = "";
 
       req
@@ -29,9 +29,21 @@ const port = 3030,
           res.end("あなたが送信したのは、" + postData);
         });
     }
-    const result = await mongodb(req);
 
-    res.end(JSON.stringify(result));
+    if (req.method === "GET") {
+      res.writeHead(httpStatus.OK, headers);
+      const result = await mongodb(req);
+
+      res.end(JSON.stringify(result));
+    }
+
+    if (req.method === "OPTIONS") {
+      res.writeHead(httpStatus.OK, headers);
+      res.end();
+    }
+
+    res.writeHead(httpStatus.BAD_REQUEST, headers);
+    res.end();
   });
 
 app.listen(port);
