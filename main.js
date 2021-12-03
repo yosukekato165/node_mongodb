@@ -3,6 +3,9 @@ import http from "http";
 import httpStatus from "http-status-codes";
 import { mongodb } from "./mongodb.js";
 
+const REFERENCE = "/reference";
+const REGISTER = "/register";
+
 dotenv.config();
 const port = 3030,
   app = http.createServer(async (req, res) => {
@@ -14,27 +17,27 @@ const port = 3030,
     };
     // httpStatus.OK:200
 
-    if (req.method === "POST") {
+    if (req.url === REGISTER) {
       res.writeHead(httpStatus.OK, headers);
-      var postData = "";
 
       req
         .on("data", async function (chunk) {
           console.log(`BODY: ${chunk}`);
-
           await mongodb(JSON.parse(chunk));
-          postData += chunk;
         })
         .on("end", function () {
-          res.end("あなたが送信したのは、" + postData);
+          res.end();
         });
     }
 
-    if (req.method === "GET") {
+    if (req.url === REFERENCE) {
       res.writeHead(httpStatus.OK, headers);
-      const result = await mongodb(req);
+      let result = {};
 
-      res.end(JSON.stringify(result));
+      req.on("data", async function (chunk) {
+        result = await mongodb(JSON.parse(chunk));
+        res.end(JSON.stringify(result));
+      });
     }
 
     if (req.method === "OPTIONS") {

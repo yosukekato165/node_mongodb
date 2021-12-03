@@ -44,10 +44,10 @@ export async function mongodb(arg) {
     //     last_review: new Date(),
     //   },
     // ]);
-    const result = await findOneListingByName(client, "Lovely Loft");
+    const result = await findOneListingByName(client, arg.name);
     return result;
   } catch (e) {
-    console.log(e);
+    console.log(`error ${e}`);
   } finally {
     await client.close();
   }
