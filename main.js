@@ -16,7 +16,7 @@ const port = 3030,
       /** add other headers as per requirement */
     };
     // httpStatus.OK:200
-
+    let result = {};
     if (req.url === REGISTER) {
       res.writeHead(httpStatus.OK, headers);
 
@@ -30,13 +30,14 @@ const port = 3030,
         });
     }
 
-    if (req.url === REFERENCE) {
+    if (req.method === "POST" && req.url === REFERENCE) {
       res.writeHead(httpStatus.OK, headers);
-      let result = {};
 
       req.on("data", async function (chunk) {
         result = await mongodb(JSON.parse(chunk));
-        res.end(JSON.stringify(result));
+        console.log(result);
+        res.write(JSON.stringify(result));
+        res.end();
       });
     }
 
