@@ -13,7 +13,7 @@ const port = 3030,
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
       "Access-Control-Max-Age": 2592000, // 30 days
-      /** add other headers as per requirement */
+      "Content-Type": "application/json",
     };
     // httpStatus.OK:200
     let result = {};
@@ -30,15 +30,18 @@ const port = 3030,
         });
     }
 
-    if (req.method === "POST" && req.url === REFERENCE) {
+    if (req.url === REFERENCE) {
       res.writeHead(httpStatus.OK, headers);
 
-      req.on("data", async function (chunk) {
-        result = await mongodb(JSON.parse(chunk));
-        console.log(result);
-        res.write(JSON.stringify(result));
-        res.end();
-      });
+      req
+        .on("data", async function (chunk) {
+          result = await mongodb(JSON.parse(chunk));
+          // res.end(JSON.stringify(result));
+        })
+        .on("end", function () {
+          res.end(JSON.stringify({ foo: "bar" }));
+          // res.end();
+        });
     }
 
     if (req.method === "OPTIONS") {
