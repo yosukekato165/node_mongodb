@@ -2,13 +2,13 @@ import express from "express";
 const app = express();
 
 const port = 3030;
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.post("/", function (req, res) {
-  data.name = req.body.name;
-  res.set("Content-Type", "application/json");
-  res.json({ name: "tomato" });
+app.post("/hello", (req, res) => {
+  res.send("Hello " + req.body.name);
 });
 
-app.listen(port);
-
-console.log(`The server has started and is listening on port number: ${port}`);
+app.listen(port, () => {
+  console.log("Application started");
+});
